@@ -107,3 +107,9 @@ def rag(query):
     return answer
 answer = rag(query)
 print(answer)
+
+# Only the testing code should be under this
+if __name__ == '__main__':
+    query = "What is NEST?"
+    answer = rag(query)
+    print(answer)
