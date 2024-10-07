@@ -1,7 +1,5 @@
 import streamlit as st
-
-# Assuming rag function from your module handles the chatbot interaction
-from pathway_pal import rag  
+from pathway_pal import rag  # Assuming this function handles the chatbot interaction
 
 def main():
     st.title("PathwayPal Chatbot")
@@ -17,13 +15,20 @@ def main():
         if query:
             # Use the rag function to get the chatbot's answer
             answer = rag(query)
-            st.write("Answer:", answer)
 
-            # Append the interaction to the chat history
-            st.session_state.chat_history.append(f"Query: {query}\nAnswer: {answer}\n{'-'*40}\n")
+            # Check for URLs and make them clickable
+            if "http://" in answer or "https://" in answer:
+                answer = make_clickable(answer)
 
-            # Optionally, display the chat history in the app
-            st.text_area("Chat History", value=''.join(st.session_state.chat_history), height=250)
+            # Display the answer using markdown to allow HTML content
+            st.markdown(answer, unsafe_allow_html=True)
+
+            # Append the interaction to the chat history, converting URLs in history as well
+            formatted_answer = make_clickable(answer)
+            st.session_state.chat_history.append(f"Query: {query}\nAnswer: {formatted_answer}\n{'-'*40}\n")
+
+            # Optionally, display the chat history in the app using markdown
+            st.markdown(''.join(st.session_state.chat_history), unsafe_allow_html=True, height=250)
         else:
             st.error("Please enter a query to get an answer.")
 
@@ -34,6 +39,15 @@ def main():
                            data=chat_history_str,
                            file_name='chat_history.txt',
                            mime='text/plain')
+
+def make_clickable(text):
+    """Converts URLs in text to HTML anchor tags."""
+    import re
+    # This regex finds all occurrences of URLs
+    url_pattern = re.compile(r'(https?://\S+)')
+    # Replace all URLs with an anchor tag
+    text = url_pattern.sub(r'<a href="\1" target="_blank">\1</a>', text)
+    return text
 
 if __name__ == '__main__':
     main()
