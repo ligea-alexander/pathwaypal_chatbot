@@ -1,6 +1,3 @@
-import streamlit as st
-from pathway_pal import rag  # Assuming this function handles the chatbot interaction
-
 def main():
     st.title("PathwayPal Chatbot")
 
@@ -16,16 +13,11 @@ def main():
             # Use the rag function to get the chatbot's answer
             answer = rag(query)
 
-            # Check for URLs and make them clickable
-            if "http://" in answer or "https://" in answer:
-                answer = make_clickable(answer)
-
-            # Display the answer using markdown to allow HTML content
-            st.markdown(answer, unsafe_allow_html=True)
+            # Display the answer using markdown to render the clickable link
+            st.markdown(answer, unsafe_allow_html=False)
 
             # Append the interaction to the chat history
-            formatted_answer = make_clickable(answer)
-            st.session_state.chat_history.append(f"Query: {query}\nAnswer: {formatted_answer}\n{'-'*40}\n")
+            st.session_state.chat_history.append(f"Query: {query}\nAnswer: {answer}\n{'-'*40}\n")
 
             # Optionally, display the chat history in the app using text_area for scrolling
             st.text_area("Chat History", value=''.join(st.session_state.chat_history), height=250)
@@ -39,15 +31,6 @@ def main():
                            data=chat_history_str,
                            file_name='chat_history.txt',
                            mime='text/plain')
-
-def make_clickable(text):
-    """Converts URLs in text to HTML anchor tags."""
-    import re
-    # This regex finds all occurrences of URLs
-    url_pattern = re.compile(r'(https?://\S+)')
-    # Replace all URLs with an anchor tag
-    text = url_pattern.sub(r'<a href="\1" target="_blank">\1</a>', text)
-    return text
 
 if __name__ == '__main__':
     main()
