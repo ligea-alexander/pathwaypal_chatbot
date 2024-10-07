@@ -20,7 +20,9 @@ from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv() 
 import os
-client = OpenAI()
+import streamlit as st
+api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=api_key)
 query = "what is NEST?"
 index.search(query, num_results = 5)
 response = client.chat.completions.create(

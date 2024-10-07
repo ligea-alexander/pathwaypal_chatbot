@@ -8,12 +8,12 @@ openai = "*"
 scikit-learn = "*"
 pandas = "*"
 streamlit = "*"
+python-dotenv = "*"
 
 [dev-packages]
 tqdm = "*"
 notebook = "==7.1.2"
 ipywidgets = "*"
-python-dotenv = "*"
 
 [requires]
 python_version = "3.12"
