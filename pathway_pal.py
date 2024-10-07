@@ -52,7 +52,7 @@ def search(query):
 
     return results
 prompt_template = """
-You are a CEO participant. Answer the QUESTION based on the CONTEXT from our scraped NEST website database warehouse.
+You are an AI assistant for CEO NEST. Answer the QUESTION based on the CONTEXT from our scraped NEST website database warehouse.
 Use only the facts from the CONTEXT when answering the QUESTION.
 
 QUESTION: {question}
