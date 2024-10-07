@@ -23,12 +23,12 @@ def main():
             # Display the answer using markdown to allow HTML content
             st.markdown(answer, unsafe_allow_html=True)
 
-            # Append the interaction to the chat history, converting URLs in history as well
+            # Append the interaction to the chat history
             formatted_answer = make_clickable(answer)
             st.session_state.chat_history.append(f"Query: {query}\nAnswer: {formatted_answer}\n{'-'*40}\n")
 
-            # Optionally, display the chat history in the app using markdown
-            st.markdown(''.join(st.session_state.chat_history), unsafe_allow_html=True, height=250)
+            # Optionally, display the chat history in the app using text_area for scrolling
+            st.text_area("Chat History", value=''.join(st.session_state.chat_history), height=250)
         else:
             st.error("Please enter a query to get an answer.")
 
