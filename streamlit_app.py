@@ -1,3 +1,6 @@
+import streamlit as st
+from pathway_pal import rag  # Assuming this function handles the chatbot interaction
+
 def main():
     st.title("PathwayPal Chatbot")
 
