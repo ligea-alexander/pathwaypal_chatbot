@@ -2,7 +2,7 @@ import streamlit as st
 from pathway_pal import rag  # Assuming this function handles the chatbot interaction
 
 def main():
-    st.title("PathwayPal Chatbot")
+    st.title("PathwayPal")
 
     # Initialize session state if not already initialized
     if 'chat_history' not in st.session_state:
