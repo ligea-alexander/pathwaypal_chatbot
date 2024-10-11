@@ -52,26 +52,34 @@ def search(query):
 
     return results
 prompt_template = """
-You are an AI assistant for CEO NEST. Answer the QUESTION based on the CONTEXT from our scraped NEST website database warehouse.
-Use only the facts from the CONTEXT when answering the QUESTION.
+You are an AI assistant for Center for Employment Opportunities (CEO) NEST. Answer the QUESTION as helpfully and naturally as possible based on the information available.
+If you don't have enough details to answer, politely ask the user for clarification.
 
 QUESTION: {question}
 
-CONTEXT: 
+Information:
 {context}
 """.strip()
 
-entry_template = """
-'parent_page': {parent_page},
-'child_page':{child_page},
-'grandchild_page':{grandchild_page},
-'great_grandchild_page':{great_grandchild_page},
-'content':{content},
-'is_link':{is_link}
-'link_type':{link_type},
-'link_title':{link_title}
-""".strip()
+# entry_template = """
+# 'parent_page': {parent_page},
+# 'child_page':{child_page},
+# 'grandchild_page':{grandchild_page},
+# 'great_grandchild_page':{great_grandchild_page},
+# 'content':{content},
+# 'is_link':{is_link}
+# 'link_type':{link_type},
+# 'link_title':{link_title}
+# """.strip()
 
+entry_template = """
+- Topic: {parent_page}
+- Subtopic: {child_page}
+- Additional Details: {grandchild_page} > {great_grandchild_page}
+- Content: {content}
+- Link Type: {link_type}
+- Link Title: {link_title}
+""".strip()
 
 def build_prompt(query, search_results, max_tokens=3000):
     context = ""
